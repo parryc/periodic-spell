@@ -13,21 +13,19 @@
 						"u","uuo","uup","uus","uut","v","w","xe","y","yb","zn","zr"],
 			list: [],
 			check: function(input){
-				return this.possibilityExists(input);
+				var clean = input.replace(/\s+/g, '').toLowerCase();
+				return this.branch(clean.substring(0,1),clean.substring(1), []) || this.branch(clean.substring(0,2),clean.substring(2), []);
 			},
-			possibilityExists: function(input){
-				return this.branch(input.substring(0,1),input.substring(1)) || this.branch(input.substring(0,2),input.substring(2));
-			},
-			branch: function(start, remainder){
-				console.log(start + "-" + remainder);
+			branch: function(start, remainder, list){
 				if(this.elements.indexOf(start) === -1)
 					return false;
-				else if(remainder === "")
-					return true;
-				else {
-					this.list.push(start);
-					return this.branch(remainder.substring(0,1),remainder.substring(1)) || this.branch(remainder.substring(0,2),remainder.substring(2));
-				}
+				
+				list.push(start);
+				if(remainder === "") {
+					return list;
+				} else
+					return this.branch(remainder.substring(0,1),remainder.substring(1),list) ||
+							this.branch(remainder.substring(0,2),remainder.substring(2),list);
 			}
 		};
 	}
