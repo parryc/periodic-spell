@@ -20,13 +20,14 @@
 			branch: function(start, remainder, list){
 				if(this.elements.indexOf(start) === -1)
 					return false;
-				
+
 				list.push(this.lookup(start));
 				if(remainder === "") {
 					return list;
 				} else
-					return this.branch(remainder.substring(0,1),remainder.substring(1),list) ||
-							this.branch(remainder.substring(0,2),remainder.substring(2),list);
+					//Because you want the possibility with less letters one come to completion first
+					return this.branch(remainder.substring(0,2),remainder.substring(2),list) ||
+							this.branch(remainder.substring(0,1),remainder.substring(1),list);
 			},
 			capitalize: function(s) {
 				return s.charAt(0).toUpperCase() + s.slice(1);
